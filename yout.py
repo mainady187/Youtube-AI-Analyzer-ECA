@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from processing import get_sentiment_arabic, get_key_points_smart, run_full_pipeline,process_pending_videos
+from processing import  run_full_pipeline,process_pending_videos
 
 
 
@@ -56,7 +56,7 @@ with st.sidebar:
             process_pending_videos() 
             st.success("Batch processing completed!")
 
-st.title("⚡ YouTube Data Retriever")
+st.title("Youtube-AI-Analyzer-ECA")
 st.write('Enter a YouTube video URL to retrieve key points and sentiment analysis.')
 
 
@@ -79,16 +79,25 @@ if st.button("Search"):
                 points = result.iloc[0]['key_points']
                 sentiment = result.iloc[0]['sentiment_analysis']
                 title = result.iloc[0]['title']
+                st.markdown(f"### Title: {title}")
+                
+         
+                st.markdown('<div>', unsafe_allow_html=True)
+
+                col1, col2 = st.columns(2)
+                with col1:
+                    st.metric(label="Target Dialect", value="Egyptian (ECA)")
+                with col2:
+                    st.metric(label="Calculated Sentiment", value=str(sentiment).upper())
+
+                st.markdown('</div>', unsafe_allow_html=True)
                 
               
                 st.subheader(f"Title: {title}")
                 st.subheader("Key Points:")
                 st.info(points)
                 st.markdown('</div>', unsafe_allow_html=True)
-                
-                st.subheader("Sentiment Analysis:")
-                st.info(sentiment)
-                st.markdown('</div>', unsafe_allow_html=True)
+           
             else:
                 st.info("Sorry, this URL is not found in the database. Processing now...")
                     
